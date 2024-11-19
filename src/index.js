@@ -1,5 +1,6 @@
-import { gsap } from 'gsap';
-export { gsap };
+import { gsap } from 'gsap'
+import './components/galleryLighthouseAnimation'
+import './components/aboutUsAnimation'
+import './components/eventsAnimation'
 
-import './components/gallery-lighthouse-animation';
-import './components/about-us-animation';
+export { gsap }
