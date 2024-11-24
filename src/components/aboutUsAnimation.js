@@ -1,60 +1,26 @@
-import { gsap } from '../index'
+import { gsap } from 'gsap'
+import {
+  menuColumn,
+  navButton, // Ensure navButton is imported or correctly defined
+  animateMenuColumn,
+  animateNavButton,
+  animateNavLinks,
+  animateSplitText
+} from '../utils/animationUtils'
 
-// Select elements by their attributes
-const menuColumn = document.querySelector('[menu-column]')
-const navLinksWrapper = document.querySelector('[nav-links-wrapper]')
 const homeTextWrapper = document.querySelector('[home-text-wrapper]')
 const aboutUsButton = document.querySelector('[about-us-button]')
-const navButton = document.querySelector('[nav-button]')
 
-// Function to handle SplitType and animation
-function animateSplitText(element, animationProps, onComplete = null) {
-  const splitInstance = new SplitType(element, { types: 'words', tagName: 'span' })
-  const words = element.querySelectorAll('.word')
-
-  gsap.fromTo(words, animationProps.from, {
-    ...animationProps.to,
-    onComplete: () => {
-      splitInstance.revert()
-      if (onComplete) onComplete()
-    }
-  })
-}
-
-// Store the initial width of the menuColumn before any animation runs
-const initialMenuColumnWidth = menuColumn.offsetWidth + 'px'
-console.log(initialMenuColumnWidth)
-
-// Function to create the forward timeline
 function createForwardTimeline() {
   const tl = gsap.timeline()
 
-  // Animation 1: Animate `menu-column` to `width: 100%`
-  tl.to(menuColumn, {
-    width: '100%',
-    duration: 0.8,
-    ease: 'power2.inOut'
-  })
+  // Animation 1: Expand the menu column
+  tl.add(animateMenuColumn(true))
 
-  // Animation 2: Fade out links in `nav-links-wrapper`
-  tl.add(() => {
-    animateSplitText(
-      navLinksWrapper,
-      {
-        from: { autoAlpha: 1, y: 0 },
-        to: {
-          autoAlpha: 0,
-          y: -30,
-          duration: 0.3,
-          ease: 'power2.in',
-          stagger: { amount: 0.3 }
-        }
-      },
-      () => gsap.set(navLinksWrapper, { display: 'none' })
-    )
-  }, 0.05)
+  // Animation 2: Fade out nav links
+  tl.add(() => animateNavLinks(false), 0.05)
 
-  // Animation 3: Make `home-text-wrapper` visible and animate text in
+  // Animation 3: Make home text wrapper visible and animate text
   tl.add(() => {
     gsap.set(homeTextWrapper, { display: 'block' })
     animateSplitText(homeTextWrapper, {
@@ -69,28 +35,12 @@ function createForwardTimeline() {
     })
   })
 
-  // Animation 4: Show `nav-button` with a smooth animation from below
-  tl.add(() => {
-    gsap.set(navButton, { display: 'block' }) // Ensure button is visible
-  })
-  tl.fromTo(
-    navButton,
-    {
-      autoAlpha: 0,
-      y: 20
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.3,
-      ease: 'power2.out'
-    }
-  )
+  // Animation 4: Show nav button
+  tl.add(() => animateNavButton(true))
 
   return tl
 }
 
-// Function to create the reverse timeline
 function createReverseTimeline() {
   const reverseTl = gsap.timeline()
 
@@ -103,63 +53,39 @@ function createReverseTimeline() {
         to: {
           autoAlpha: 0,
           x: 30,
-          duration: 0.4,
+          duration: 0.3, // Kürzere Dauer für schnelleres Ausblenden
           ease: 'power2.in',
-          stagger: { amount: 0.2 }
+          stagger: { amount: 0.2 } // Gleicher Stagger wie beim vorherigen Code
         }
       },
-      () => gsap.set(homeTextWrapper, { display: 'none' })
+      () => {
+        gsap.set(homeTextWrapper, { display: 'none' }) // Sicherstellen, dass es unsichtbar wird
+        console.log('home-text-wrapper hidden') // Debugging log
+      }
     )
   })
 
-  // Step 2: Hide the nav-button
-  reverseTl.to(navButton, {
-    autoAlpha: 0,
-    y: 20,
-    duration: 0.3,
-    ease: 'power2.inOut',
-    onComplete: () => {
-      gsap.set(navButton, { display: 'none' }) // Hide button after animation
-    }
-  })
+  // Step 2: Hide nav button
+  reverseTl.add(() => animateNavButton(false))
 
-  // Step 3: Shrink menu-column back to its initial size
-  reverseTl.to(menuColumn, {
-    width: initialMenuColumnWidth,
-    duration: 0.8,
-    ease: 'power2.inOut',
-    onStart: () => gsap.set(menuColumn, { overflow: 'hidden' }),
-    onComplete: () => {
-      gsap.set(menuColumn, { width: 'auto', overflow: '' })
-    }
-  })
+  // Step 3: Shrink menu column back to its initial size
+  reverseTl.add(() => animateMenuColumn(false), '+=0.2') // Verzögerung, um sicherzustellen, dass vorherige Schritte abgeschlossen sind
 
-  // Step 4: Fade in nav-links-wrapper
-  reverseTl.add(() => {
-    gsap.set(navLinksWrapper, { display: 'flex' })
-    animateSplitText(navLinksWrapper, {
-      from: { autoAlpha: 0, y: -30 },
-      to: {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-        stagger: { amount: 0.3 }
-      }
-    })
-  })
+  // Step 4: Fade in nav links
+  reverseTl.add(() => animateNavLinks(true))
 
   return reverseTl
 }
 
-// Button click event listener for About Us button
+// Button click event listeners
 aboutUsButton.addEventListener('click', () => {
-  const tl = createForwardTimeline()
-  tl.play()
+  createForwardTimeline().play()
 })
 
-// Button click event listener for Nav Button
-navButton.addEventListener('click', () => {
-  const reverseTl = createReverseTimeline()
-  reverseTl.play()
-})
+if (navButton) {
+  navButton.addEventListener('click', () => {
+    createReverseTimeline().play()
+  })
+} else {
+  console.error('navButton is not defined or missing in the DOM')
+}
