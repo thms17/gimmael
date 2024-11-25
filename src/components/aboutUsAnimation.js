@@ -60,7 +60,6 @@ function createReverseTimeline() {
       },
       () => {
         gsap.set(homeTextWrapper, { display: 'none' }) // Sicherstellen, dass es unsichtbar wird
-        console.log('home-text-wrapper hidden') // Debugging log
       }
     )
   })
@@ -72,7 +71,7 @@ function createReverseTimeline() {
   reverseTl.add(() => animateMenuColumn(false), '+=0.2') // Verzögerung, um sicherzustellen, dass vorherige Schritte abgeschlossen sind
 
   // Step 4: Fade in nav links
-  reverseTl.add(() => animateNavLinks(true))
+  reverseTl.add(() => animateNavLinks(true), '+=0.3')
 
   return reverseTl
 }
@@ -86,6 +85,4 @@ if (navButton) {
   navButton.addEventListener('click', () => {
     createReverseTimeline().play()
   })
-} else {
-  console.error('navButton is not defined or missing in the DOM')
 }

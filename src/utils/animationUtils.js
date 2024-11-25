@@ -55,6 +55,9 @@ export function animateNavButton(show = true) {
 
 export function animateNavLinks(show = true) {
   if (show) {
+    // Vor der Animation sicherstellen, dass der Wrapper sichtbar ist
+    gsap.set(navLinksWrapper, { display: 'flex' })
+
     // Fade in animation
     return animateSplitText(
       navLinksWrapper,
@@ -67,8 +70,8 @@ export function animateNavLinks(show = true) {
           ease: 'power2.out',
           stagger: { amount: 0.3 }
         }
-      },
-      () => gsap.set(navLinksWrapper, { display: 'flex' })
+      }
+      // () => gsap.set(navLinksWrapper, { display: 'flex' }) // Set display after animation
     )
   } else {
     // Fade out animation
@@ -84,7 +87,10 @@ export function animateNavLinks(show = true) {
           stagger: { amount: 0.3 }
         }
       },
-      () => gsap.set(navLinksWrapper, { display: 'none' })
+      () => {
+        // Hide completely after animation
+        gsap.set(navLinksWrapper, { display: 'none' })
+      }
     )
   }
 }

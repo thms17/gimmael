@@ -1,6 +1,7 @@
 import { gsap } from 'gsap'
 import {
   menuColumn,
+  navButton,
   animateMenuColumn,
   animateNavButton,
   animateNavLinks
