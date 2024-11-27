@@ -1,8 +1,11 @@
 import { gsap } from 'gsap'
-import GSDevTools from 'gsap/GSDevTools'
+import { SplitText } from 'gsap/SplitText'
+import { GSDevTools } from 'gsap/GSDevTools'
 
 import './components/galleryLighthouseAnimation'
-import './components/aboutUsAnimation'
 import './components/eventsAnimation'
-gsap.registerPlugin(GSDevTools)
-export { gsap, GSDevTools }
+
+// GSAP Plugins registrieren
+gsap.registerPlugin(SplitText, GSDevTools)
+
+export { gsap, GSDevTools, SplitText }
