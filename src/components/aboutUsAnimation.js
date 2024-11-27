@@ -1,6 +1,5 @@
 import { gsap } from 'gsap'
 import {
-  menuColumn,
   navButton, // Ensure navButton is imported or correctly defined
   animateMenuColumn,
   animateNavButton,

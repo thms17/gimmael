@@ -1,4 +1,5 @@
-import { gsap } from 'gsap'
+import { gsap, GSDevTools } from '../index'
+
 import {
   menuColumn,
   navButton,
@@ -30,21 +31,22 @@ function createEventsTimeline() {
   return tl
 }
 
-// Reverse Animation
 function createEventsClosingTimeline() {
   const tl = gsap.timeline()
+  GSDevTools.create({ animation: tl })
+
   tl.add(() =>
     gsap.to(eventTitles, {
       opacity: 0,
       x: 30,
-      duration: 0.6,
+      duration: 0.2,
       ease: 'power2.in',
-      stagger: 0.1
+      stagger: 0.05
     })
   )
-    .add(() => gsap.set(eventsTextWrapper, { autoAlpha: 0, display: 'none' }))
     .add(animateNavButton(false))
     .add(animateMenuColumn(false))
+    .add(() => gsap.set(eventsTextWrapper, { autoAlpha: 0, display: 'none' }))
     .add(() => animateNavLinks(true))
   return tl
 }
