@@ -1,0 +1,52 @@
+.swiper-wrapper {
+  height: 70vh;
+}
+
+.swiper-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Abstand zwischen den Buttons */
+  margin-top: 3rem; /* Abstand nach oben, unterhalb der Pagination */
+  position: relative; /* Keine absolute Positionierung */
+  z-index: 1; /* Sicherstellen, dass sie sichtbar sind */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  all: unset; /* Alle Standard-Styles zurücksetzen */
+  width: 15rem; /* Breite des Buttons */
+  height: 7.5rem; /* Höhe des Buttons */
+  background-size: contain; /* Bild vollständig anzeigen */
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer; /* Zeigt an, dass es klickbar ist */
+  transition: transform 0.3s ease; /* Hover-In und Hover-Out mit easing */
+}
+
+.swiper-button-prev {
+  background-image: url('https://cdn.prod.website-files.com/6735b961e71004e154e69d65/675ffdfdb9b650b554d4a602_left%20hand.avif');
+}
+
+.swiper-button-next {
+  background-image: url('https://cdn.prod.website-files.com/6735b961e71004e154e69d65/675ffdfd83864b4340fdc642_right%20hand.avif');
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none; /* Versteckt das After-Element */
+  content: ''; /* Entfernt den Text-Inhalt sicherheitshalber */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  transform: scale(1.1); /* Leichte Vergrößerung beim Hover */
+}
+
+/* Optional: Buttons zentrieren */
+.swiper-button-prev {
+  order: 1; /* Links */
+}
+
+.swiper-button-next {
+  order: 2; /* Rechts */
+}

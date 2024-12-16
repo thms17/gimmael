@@ -10,6 +10,18 @@ const materialsElement = lightboxOverlay?.querySelector('[lighthouse-materials]'
 const dimensionsElement = lightboxOverlay?.querySelector('[lighthouse-dimensions]')
 const lightboxInner = lightboxOverlay?.querySelector('[lightbox-inner]')
 
+// Funktion zum Schließen des Overlays
+function closeLightbox() {
+  gsap.to(lightboxOverlay, {
+    opacity: 0,
+    duration: 0.5,
+    ease: 'power2.in',
+    onComplete: () => {
+      lightboxOverlay.style.display = 'none'
+    }
+  })
+}
+
 if (
   collectionItems.length > 0 &&
   lightboxOverlay &&
@@ -46,14 +58,14 @@ if (
   // Schließe das Overlay, wenn außerhalb von lightbox-inner geklickt wird
   lightboxOverlay.addEventListener('click', function (event) {
     if (!lightboxInner.contains(event.target)) {
-      gsap.to(lightboxOverlay, {
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          lightboxOverlay.style.display = 'none'
-        }
-      })
+      closeLightbox()
+    }
+  })
+
+  // Schließe das Overlay per ESC-Taste
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeLightbox()
     }
   })
 }

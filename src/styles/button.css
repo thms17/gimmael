@@ -1,0 +1,78 @@
+/* remove background from buttons if you use <button> tag*/
+:where(button) {
+  background-color: transparent;
+}
+
+/* make button click area bigger */
+.button {
+  --active-ease: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --active-speed: 0.3s;
+
+  transition: transform var(--active-speed) var(--active-ease);
+}
+
+.button.is-swoopadoop {
+  --color: #e0d4bd; /* Hauptfarbe */
+  --color-accent: #ffffff; /* Akzentfarbe */
+}
+
+.button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: -0.25rem;
+}
+
+.button-default:active {
+  transform: scaleX(0.993) scaleY(0.992);
+}
+
+.button.is-swoopadoop {
+  --ease: cubic-bezier(0.21, 1, 0.34, 1);
+  --color-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --speed: 0.45s;
+  --speed-fast: 0.3s;
+  --speed-faster: 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button.is-swoopadoop::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: var(--color);
+    top: -0.125rem;
+    left: -0.125rem;
+    width: calc(100% + 0.25rem);
+    height: calc(100% + 0.25rem);
+    clip-path: inset(0.5rem 0.5rem calc(100% - 0.5rem) 0.5rem round 0.75rem);
+    transition: clip-path var(--speed) var(--ease);
+    transform: translateZ(0); /* smoother animation in safari */
+  }
+
+  .button.is-swoopadoop:hover::before,
+  .button.is-swoopadoop:focus-visible::before {
+    clip-path: inset(0 0 0 0 round 0.25rem);
+  }
+
+  .button.is-swoopadoop .button__text {
+    text-shadow: 0 2em 0 var(--color); /* two lines of text will not work */
+    transform: translateY(-2em);
+    transition: transform var(--speed) var(--ease),
+      text-shadow var(--speed-faster) var(--color-ease);
+  }
+
+  .button.is-swoopadoop:hover .button__text,
+  .button.is-swoopadoop:focus-visible .button__text {
+    transform: translateY(0);
+    text-shadow: 0 2em 0 var(var(--colors--accent)); /* two lines of text will not work */
+  }
+}
+
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .button.is-swoopadoop::before {
+    clip-path: inset(
+      0.5rem 0.5rem 100% 0.5rem round 0.75rem
+    ); /* fix only for safari because it can not handle calc() correctly in clip-path */
+  }
+}

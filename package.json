@@ -58,7 +58,8 @@
   "dependencies": {
     "@finsweet/ts-utils": "^0.39.2",
     "gsap": "^3.12.5",
-    "split-type": "^0.3.3"
+    "split-type": "^0.3.3",
+    "swiper": "^11.1.15"
   },
   "engines": {
     "pnpm": ">=8"
