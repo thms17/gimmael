@@ -21,8 +21,8 @@ const mySwiper = new Swiper('.swiper', {
       slidesPerView: 2, // 2 Slides pro Zeile ab 768px
       spaceBetween: 16
     },
-    480: {
-      slidesPerView: 1, // 1 Slide pro Zeile ab 480px
+    0: {
+      slidesPerView: 2, // 1 Slide pro Zeile ab 480px
       spaceBetween: 12
     }
   }

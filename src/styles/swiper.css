@@ -1,5 +1,17 @@
 .swiper-wrapper {
-  height: 70vh;
+  height: 60vh;
+}
+
+@media (min-width: 992px) {
+  .swiper-wrapper {
+    height: 70vh;
+  }
+}
+
+@media (min-width: 480px) {
+  .swiper-wrapper {
+    height: 60vh;
+  }
 }
 
 .swiper-navigation {
@@ -9,6 +21,12 @@
   margin-top: 3rem; /* Abstand nach oben, unterhalb der Pagination */
   position: relative; /* Keine absolute Positionierung */
   z-index: 1; /* Sicherstellen, dass sie sichtbar sind */
+}
+
+@media (max-width: 479px) {
+  .swiper-navigation {
+    margin-top: 1rem;
+  }
 }
 
 .swiper-button-prev,
