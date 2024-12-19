@@ -7,10 +7,10 @@ const elements = document.querySelectorAll('[animate-stagger-in]')
 if (elements.length > 0) {
   // GSAP-Animation mit Stagger
   gsap.from(elements, {
-    y: 40,
+    y: 20,
     autoAlpha: 0,
-    duration: 0.45,
-    ease: 'power1.out',
-    stagger: 0.1 // Zeitverzögerung zwischen den Animationen
+    duration: 0.35,
+    ease: 'power3.out',
+    stagger: 0.07 // Zeitverzögerung zwischen den Animationen
   })
 }
